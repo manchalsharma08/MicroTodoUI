@@ -1,0 +1,28 @@
+trigger: none
+
+
+pool: default
+
+steps:
+
+- task: SonarQubePrepare@7
+  inputs:
+     SonarQube: 'My_sonarQube'
+     scannerMode: 'other'
+- task: NodeTool@0
+  inputs:
+    versionSource: 'spec'
+    versionSpec: '16'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    failTaskOnFailedTests: true
+    failTaskOnMissingResultsFile: true
