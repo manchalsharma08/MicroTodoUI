@@ -23,11 +23,11 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: SonarQubeAnalyze@7
+- task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@1
   inputs:
     jdkversion: 'JAVA_HOME'
 
-- task: SonarQubePublish@7
+- task: SonarSource.sonarqube.291ed61f-1ee4-45d3-b1b0-bf822d9095ef.SonarQubePublish@1
   inputs:
     pollingTimeoutSec: '300'
 
