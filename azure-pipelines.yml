@@ -7,8 +7,12 @@ steps:
 
 - task: SonarQubePrepare@7
   inputs:
-     SonarQube: 'My_sonarQube'
-     scannerMode: 'other'
+    SonarQube: 'My_sonarQube'
+    scannerMode: 'cli'
+    configMode: 'manual'
+    cliProjectKey: 'new-project'
+    cliProjectName: 'new-project'
+    cliSources: '.'
 - task: NodeTool@0
   inputs:
     versionSource: 'spec'
@@ -25,4 +29,4 @@ steps:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/TEST-*.xml'
     failTaskOnFailedTests: true
-    failTaskOnMissingResultsFile: true
+    failTaskOnFailureToPublishResults: true
