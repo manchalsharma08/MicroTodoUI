@@ -1,0 +1,36 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool: default
+
+steps:
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'My_sonarQube'
+    scannerMode: 'cli'
+    configMode: 'manual'
+    cliProjectKey: 'first-pipeline_ReactTodoUIMonolith.git_dcbd241d-4f7c-4d44-94bb-6fac70a3e9c1'
+    cliProjectName: 'sonar.ReactTodoUIMonolith'
+    cliSources: '.'
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    failTaskOnFailedTests: true
+    failTaskOnFailureToPublishResults: true
+    failTaskOnMissingResultsFile: true
