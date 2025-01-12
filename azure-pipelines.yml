@@ -6,12 +6,12 @@ steps:
 
 - task: SonarQubePrepare@7
   inputs:
-    SonarQube: 'My_sonarQube'
+    SonarQube: 'My_SONAR'
     scannerMode: 'cli'
     configMode: 'manual'
     cliProjectKey: 'new-project'
     cliProjectName: 'new-project'
-    cliSources: '.' 
+    cliSources: '.'
 - task: NodeTool@0
   inputs:
     versionSource: 'spec'
@@ -23,35 +23,12 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: SonarSource.sonarqube.6D01813A-9589-4B15-8491-8164AEB38055.SonarQubeAnalyze@1
+
+
+
+- task: PublishTestResults@2
   inputs:
-    jdkversion: 'JAVA_HOME'
-
-- task: SonarSource.sonarqube.291ed61f-1ee4-45d3-b1b0-bf822d9095ef.SonarQubePublish@1
-  inputs:
-    pollingTimeoutSec: '300'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-    verbose: true
-    quiet: true
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-    StoreAsTar: true
-
-
-# - task: PublishTestResults@2
-#   inputs:
-#     testResultsFormat: 'JUnit'
-#     testResultsFiles: '**/TEST-*.xml'
-#     failTaskOnFailedTests: true
-#     failTaskOnFailureToPublishResults: true
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
+    failTaskOnFailedTests: true
+    failTaskOnFailureToPublishResults: true
