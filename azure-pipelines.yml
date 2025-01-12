@@ -12,6 +12,14 @@ steps:
     cliProjectKey: 'new-project'
     cliProjectName: 'new-project'
     cliSources: '.'
+- task: SonarQubePrepare@7
+  inputs:
+    SonarQube: 'My_SONAR'
+    scannerMode: 'cli'
+    configMode: 'manual'
+    cliProjectKey: 'first-pipeline_ReactTodoUIMonolith.git_dcbd241d-4f7c-4d44-94bb-6fac70a3e9c1'
+    cliProjectName: 'new-project'
+    cliSources: '.'
 - task: NodeTool@0
   inputs:
     versionSource: 'spec'
